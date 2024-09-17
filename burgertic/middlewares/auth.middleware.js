@@ -14,8 +14,12 @@ export const verifyToken = async (req, res, next) => {
     
         Recordar también que si sucede cualquier error en este proceso, deben devolver un error 401 (Unauthorized)
     */
-    const token =res.body.token
+    const token =req.body.token
     /* FALTA VERIFICAR FORMATO DEL TOKEN */
+
+    if(!token){
+        res.status(404).json({message:"No hay ningún token."})
+    }
 
     const secret="Vamos Racing"
     jwt.verify(token,secret, (err,decoded))

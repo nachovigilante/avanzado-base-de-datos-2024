@@ -55,6 +55,19 @@ const register = async (req, res) => {
                 8. Devolver un mensaje de error si algo falló (status 500)
             
         */
-    };
+       const usuario=req.body;
+       
+       if(!usuario.email||!usuario.password){
+           res.status(404).json({message:error.message})
+       }
+       
+       try{
+           await usuariosService.getUsuarioByEmail(usuario.email); 
+           res.status(200).send('Todo Ok')
+       }
+       catch(err){
+           res.status(500).json({message:error.message})
+       }
+    }
 
     export default { register, login }
