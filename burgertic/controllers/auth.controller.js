@@ -1,6 +1,7 @@
 import UsuariosService from "../services/usuarios.service.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import usuariosService from "../services/usuarios.service.js";
 
 const register = async (req, res) => {
     // --------------- COMPLETAR ---------------
@@ -18,24 +19,42 @@ const register = async (req, res) => {
             8. Devolver un mensaje de error si algo falló guardando al usuario (status 500)
         
     */
-};
 
-const login = async (req, res) => {
-    // --------------- COMPLETAR ---------------
-    /*
+    const usuario = req.body
+    if (!usuario.email || !usuario.password || !usuario.nombre || !usuario.apellido) {
+        res.status(400).send('Todos los campos tienen que estar completos')
+    }
 
-        Recordar que para cumplir con toda la funcionalidad deben:
+    try {
+        //Genero Hash
+        const salt = bcrypt.genSaltSync(10)
+        const hash = bcrypt.hashSync(password, salt)
 
-            1. Verificar que el body de la request tenga el campo email y password
-            2. Buscar un usuario con el email recibido
-            3. Verificar que el usuario exista
-            4. Verificar que la contraseña recibida sea correcta
-            5. Devolver un mensaje de error si algo falló hasta el momento (status 400)
-            6. Crear un token con el id del usuario y firmarlo con la clave secreta (utilizando la librería jsonwebtoken)
-            7. Devolver un json con el usuario y el token (status 200)
-            8. Devolver un mensaje de error si algo falló (status 500)
-        
-    */
-};
+        usuario.password = hash;
 
-export default { register, login };
+        await usuariosService.createUsuario(usuario);
+
+        res.json({ message: "Usuario creado" })
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+    const login = async (req, res) => {
+        // --------------- COMPLETAR ---------------
+        /*
+    
+            Recordar que para cumplir con toda la funcionalidad deben:
+    
+                1. Verificar que el body de la request tenga el campo email y password
+                2. Buscar un usuario con el email recibido
+                3. Verificar que el usuario exista
+                4. Verificar que la contraseña recibida sea correcta
+                5. Devolver un mensaje de error si algo falló hasta el momento (status 400)
+                6. Crear un token con el id del usuario y firmarlo con la clave secreta (utilizando la librería jsonwebtoken)
+                7. Devolver un json con el usuario y el token (status 200)
+                8. Devolver un mensaje de error si algo falló (status 500)
+            
+        */
+    };
+
+    export default { register, login }

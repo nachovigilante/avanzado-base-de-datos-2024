@@ -1,3 +1,4 @@
+import pedidosService from "../services/pedidos.service.js";
 import PedidosService from "../services/pedidos.service.js";
 
 const getPedidos = async (req, res) => {
@@ -10,6 +11,13 @@ const getPedidos = async (req, res) => {
             3. Devolver un mensaje de error si algo falló (status 500)
         
     */
+    try{
+        const pedidos=await pedidosService.getPedidos()
+        res.json(pedidos)
+    }
+    catch(error){
+        res.status(500).json({message : error.message})
+    }
 };
 
 const getPedidosByUser = async (req, res) => {
@@ -23,6 +31,18 @@ const getPedidosByUser = async (req, res) => {
             4. Devolver un mensaje de error si algo falló (status 500)
         
     */
+    const idUser=req.params.idUser
+    if (!idUser) return res.status(400).json({ message: "Se necesita un ID" });
+    try{
+        const pedidos= await pedidosService.getPedidosByUser(idUser)
+        if (!pedidos){
+            res.status(404).json({message: "No hay pedidos para ese usuario"})
+        }
+        res.json(pedidos)
+    }
+    catch(error){
+        res.status(500).json({message : error.message})
+    }
 };
 
 const getPedidoById = async (req, res) => {
@@ -36,6 +56,18 @@ const getPedidoById = async (req, res) => {
             4. Devolver un mensaje de error si algo falló (status 500)
         
     */
+    const id=req.params.id
+    if (!id) return res.status(400).json({ message: "Se necesita un ID" });
+    try{
+        const pedido= await pedidosService.getPedidoById(id)
+        if (!pedido){
+            res.status(404).json({message: "Pedido no encontrado"})
+        }
+        res.json(pedido)
+    }
+    catch(error){
+        res.status(500).json({message : error.message})
+    }
 };
 
 const createPedido = async (req, res) => {
@@ -53,6 +85,12 @@ const createPedido = async (req, res) => {
             8. Devolver un mensaje de error si algo falló (status 500)
         
     */
+    const platos=req.body.platos
+    if (!platos) return res.status(400).json({ message: "El pedido debe tener platos" });
+
+    if (!Array.IsArray(platos)) return res.status(400).json({ message: "Platos debe ser un array" });
+
+    
 };
 
 const aceptarPedido = async (req, res) => {
