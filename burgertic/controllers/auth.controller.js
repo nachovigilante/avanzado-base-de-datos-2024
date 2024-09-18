@@ -32,7 +32,10 @@ const register = async (req, res) => {
         console.log(hash)
 
         usuario.password = hash;
-
+        const usuario_email=usuariosService.getUsuarioByEmail(usuario.email)
+        if(usuario){
+            return res.status(400).json({message: "Ya hay un usuario con ese email"})
+        }
         await usuariosService.createUsuario(usuario);
 
         res.json({ message: "Usuario creado" })
