@@ -10,14 +10,14 @@ const router = Router();
 
 // Recordar utilizar los middleware verifyToken y/o verifyAdmin en las rutas que correspondan
 
-router.get("/pedidos", PedidosController.getPedidos );
-router.get("/pedidos/:id", PedidosController.getPedidoById);
-router.get("/pedidos/:idUser",PedidosController.getPedidosByUser);
-router.post("/pedidos", verifyToken, verifyAdmin,PedidosController.createPedido );
-router.put("pedidos/:id/aceptar", PedidosController.aceptarPedido);
-router.put("/pedidos/:id/comenzar", PedidosController.comenzarPedido);
-router.put("/pedidos/:id/entregar", PedidosController.entregarPedido);
-router.delete("/pedidos/:id", verifyToken, verifyAdmin,PedidosController.deletePedido);
+router.get("/", PedidosController.getPedidos );
+router.get("/:id", PedidosController.getPedidoById);
+router.get("/:idUser",PedidosController.getPedidosByUser);
+router.post("/", verifyToken, verifyAdmin,PedidosController.createPedido );
+router.put("/:id/aceptar", PedidosController.aceptarPedido);
+router.put("/:id/comenzar", PedidosController.comenzarPedido);
+router.put("/:id/entregar", PedidosController.entregarPedido);
+router.delete("/:id", verifyToken, verifyAdmin,PedidosController.deletePedido);
 
 
 export default router;

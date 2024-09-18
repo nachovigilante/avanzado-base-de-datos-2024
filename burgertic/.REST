@@ -1,0 +1,38 @@
+//USUARIOS
+POST  http://localhost:3000/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "password":"setto",
+    "email":"setto@gmail.com",
+    "nombre":"maxi",
+    "apellido":"setto",
+    "admin": "true"
+
+}
+
+###
+
+POST  http://localhost:3000/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"setto@gmail.com",
+    "password":"setto"
+}
+
+###
+
+//PEDIDOS
+GET  http://localhost:3000/pedidos HTTP/1.1
+
+####
+
+GET  http://localhost:3000/pedidos/1 HTTP/1.1
+
+###
+
+GET  http://localhost:3000/pedidos/2 HTTP/1.1
+
+###
+

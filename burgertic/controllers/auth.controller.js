@@ -28,7 +28,8 @@ const register = async (req, res) => {
     try {
         //Genero Hash
         const salt = bcrypt.genSaltSync(10)
-        const hash = bcrypt.hashSync(password, salt)
+        const hash = bcrypt.hashSync(usuario.password, salt)
+        console.log(hash)
 
         usuario.password = hash;
 
@@ -55,6 +56,19 @@ const register = async (req, res) => {
                 8. Devolver un mensaje de error si algo falló (status 500)
             
         */
-    };
+       const usuario=req.body;
+       
+       if(!usuario.email||!usuario.password){
+           res.status(404).json({message:error.message})
+       }
+       
+       try{
+           await usuariosService.getUsuarioByEmail(usuario.email); 
+           res.status(200).send('Todo Ok')
+       }
+       catch(err){
+           res.status(500).json({message:error.message})
+       }
+    }
 
     export default { register, login }
