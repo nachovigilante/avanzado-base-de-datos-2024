@@ -28,7 +28,8 @@ const register = async (req, res) => {
     try {
         //Genero Hash
         const salt = bcrypt.genSaltSync(10)
-        const hash = bcrypt.hashSync(password, salt)
+        const hash = bcrypt.hashSync(usuario.password, salt)
+        console.log(hash)
 
         usuario.password = hash;
 

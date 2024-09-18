@@ -8,7 +8,7 @@ const router = Router();
 // ------------- COMPLETAR LAS RUTAS DE LOGIN Y REGISTER -------------
 
 router.post("/register", authController.register );
-router.get("/login/:email", authController.login);
+router.post("/login", authController.login);
 
  
 export default router;

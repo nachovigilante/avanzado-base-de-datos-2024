@@ -107,6 +107,18 @@ const aceptarPedido = async (req, res) => {
             7. Devolver un mensaje de error si algo falló (status 500)
         
     */
+   const pedido=req.body
+            if(pedido.estado !== "aceptado"){
+                res.status(400).json({message:'Pedido no aceptado'})
+            }
+            try{
+                await pedidosService.updatePedido(pedido.id); 
+                res.status(200).send('Todo Ok')
+            }
+            catch(err){
+                res.status(500).json({message:error.message})
+            }
+         
 };
 
 const comenzarPedido = async (req, res) => {
@@ -153,6 +165,17 @@ const deletePedido = async (req, res) => {
             5. Devolver un mensaje de error si algo falló (status 500)
         
     */
+   const pedido= req.body
+   if(!pedido.id){
+       res.status(404).json({message:'Pedido no existente'})
+   }
+   try{
+    await pedidosService.deletePedido(pedido.id); 
+    res.status(200).send('Todo Ok')
+}
+catch(err){
+    res.status(500).json({message:error.message})
+}
 };
 
 export default {
