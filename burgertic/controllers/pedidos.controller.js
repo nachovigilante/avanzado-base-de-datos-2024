@@ -121,10 +121,10 @@ const aceptarPedido = async (req, res) => {
     }
     try {
         await pedidosService.getPedidoById(id);
-        res.status(200).send('Todo Ok')
+        return res.status(200).send('Todo Ok')
     }
     catch (err) {
-        res.status(500).json({ message: error.message })
+        return res.status(500).json({ message: error.message })
     }
 
 };
@@ -143,6 +143,27 @@ const comenzarPedido = async (req, res) => {
             7. Devolver un mensaje de error si algo falló (status 500)
         
     */
+   const id =parseInt(req.params.id)
+
+   const pedido=pedidosService.getPedidoById(id);
+
+   if(!pedido){
+       return res.status(404).json({message:'Pedido no existente.'})
+   }
+   if(pedido.estado !== "aceptado"){
+       return res.status(400).json({message:"El pedido o esta aceptado"})
+   }
+   if(pedido.estado==="aceptado") {
+       pedido.estado="en camino"
+       return 
+   }
+   try {
+    await pedidosService.updatePedido(id);
+    return res.status(200).send('Pedido aceptado')
+}
+catch (err) {
+    return res.status(500).json({ message: error.message })
+}
 };
 
 const entregarPedido = async (req, res) => {
@@ -159,6 +180,27 @@ const entregarPedido = async (req, res) => {
             7. Devolver un mensaje de error si algo falló (status 500)
         
     */
+   const id =parseInt(req.params.id)
+
+   const pedido=pedidosService.getPedidoById(id);
+
+   if(!pedido){
+       return res.status(404).json({message:'Pedido no existente.'})
+   }
+   if(pedido.estado !== "en camino"){
+       return res.status(400).json({message:"El pedido no esta en camino"})
+   }
+   if(pedido.estado==="en camino") {
+       pedido.estado="entregado"
+       return 
+   }
+   try {
+    await pedidosService.updatePedido(id);
+    return res.status(200).send('Pedido entregado')
+}
+catch (err) {
+    return res.status(500).json({ message: error.message })
+}
 };
 
 const deletePedido = async (req, res) => {

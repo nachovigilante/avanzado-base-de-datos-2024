@@ -36,3 +36,30 @@ GET  http://localhost:3000/pedidos/2 HTTP/1.1
 
 ###
 
+POST  http://localhost:3000/pedidos HTTP/1.1
+Content-Type: application/json
+
+{
+    "id_usuario":"",
+    "estado":"",
+    "fecha":""
+}
+
+###
+
+PUT http://localhost:3000/pedidos/2/aceptar HTTP/1.1
+###
+
+PUT http://localhost:3000/pedidos/2/comenzar HTTP/1.1
+
+###
+
+PUT http://localhost:3000/pedidos/2/entregar HTTP/1.1
+
+###
+
+DELETE http://localhost:3000/pedidos/2 HTTP/1.1
+
+###
+//PLATOS
+

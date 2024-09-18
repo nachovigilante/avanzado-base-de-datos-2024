@@ -22,7 +22,7 @@ const register = async (req, res) => {
 
     const usuario = req.body
     if (!usuario.email || !usuario.password || !usuario.nombre || !usuario.apellido) {
-        res.status(400).send('Todos los campos tienen que estar completos')
+        return res.status(400).send('Todos los campos tienen que estar completos')
     }
 
     try {
@@ -38,9 +38,9 @@ const register = async (req, res) => {
         }
         await usuariosService.createUsuario(usuario);
 
-        res.json({ message: "Usuario creado" })
+        return res.json({ message: "Usuario creado" })
     } catch (error) {
-        res.status(500).json({ message: error.message });
+       return res.status(500).json({ message: error.message });
     }
 }
     const login = async (req, res) => {
@@ -66,11 +66,16 @@ const register = async (req, res) => {
        }
        
        try{
+            const salt = bcrypt.genSaltSync(10)
+            const hash = bcrypt.hashSync(usuario.password, salt)
+            console.log(hash)
+
+            usuario.password = hash;
            await usuariosService.getUsuarioByEmail(usuario.email); 
-           res.status(200).send('Todo Ok')
+           return res.status(200).send('Todo Ok')
        }
        catch(err){
-           res.status(500).json({message:error.message})
+          return res.status(500).json({message:error.message})
        }
     }
 
