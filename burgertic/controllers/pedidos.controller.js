@@ -85,10 +85,24 @@ const createPedido = async (req, res) => {
             8. Devolver un mensaje de error si algo falló (status 500)
         
     */
+    const idUser =req.id
     const platos = req.body.platos
     if (!platos) return res.status(400).json({ message: "El pedido debe tener platos" });
 
-    if (!Array.IsArray(platos)) return res.status(400).json({ message: "Platos debe ser un array" });
+    if (!Array.IsArray(platos)){ 
+        return res.status(400).json({ message: "Platos debe ser un array" });
+    }
+
+    if(!platos.id|| !platos.cantidad){
+        return res.status(400).json({message:'Platos tiene que tener id y cantidad'})
+    }
+    try {
+        await pedidosService.createPedido(idUser,platos);
+        return res.status(201).send('Todo Ok')
+    }
+    catch (err) {
+        return res.status(500).json({ message: err.message })
+    }
 
 
 };
@@ -124,7 +138,7 @@ const aceptarPedido = async (req, res) => {
         return res.status(200).send('Todo Ok')
     }
     catch (err) {
-        return res.status(500).json({ message: error.message })
+        return res.status(500).json({ message: err.message })
     }
 
 };
@@ -151,7 +165,7 @@ const comenzarPedido = async (req, res) => {
        return res.status(404).json({message:'Pedido no existente.'})
    }
    if(pedido.estado !== "aceptado"){
-       return res.status(400).json({message:"El pedido o esta aceptado"})
+       return res.status(400).json({message:"El pedido no esta aceptado"})
    }
    if(pedido.estado==="aceptado") {
        pedido.estado="en camino"
@@ -159,10 +173,10 @@ const comenzarPedido = async (req, res) => {
    }
    try {
     await pedidosService.updatePedido(id);
-    return res.status(200).send('Pedido aceptado')
+    return res.status(200).send('Pedido en camino')
 }
 catch (err) {
-    return res.status(500).json({ message: error.message })
+    return res.status(500).json({ message: err.message })
 }
 };
 
@@ -199,7 +213,7 @@ const entregarPedido = async (req, res) => {
     return res.status(200).send('Pedido entregado')
 }
 catch (err) {
-    return res.status(500).json({ message: error.message })
+    return res.status(500).json({ message: err.message })
 }
 };
 
@@ -226,7 +240,7 @@ const deletePedido = async (req, res) => {
         return res.status(200).send('Todo Ok')
     }
     catch (err) {
-        return res.status(500).json({ message: error.message })
+        return res.status(500).json({ message: err.message })
     }
 };
 
