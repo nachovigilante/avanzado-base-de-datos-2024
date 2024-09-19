@@ -14,6 +14,29 @@ export const verifyToken = async (req, res, next) => {
     
         Recordar también que si sucede cualquier error en este proceso, deben devolver un error 401 (Unauthorized)
     */
+    const step1 = req.headers['authorization'];
+    if(!authorization){
+        return res.status(401).json({ error: 'No hay token'})
+    }
+
+    const step2 = authorization.split(' ')[1];
+    if (!token || authorization.split(' ')[0] !== 'Bearer') {
+        return res.status(401).json({ error: 'Token inválido' });
+    }
+
+    try {
+        const verifiedToken = jwt.verify(token, process.env.SECRET_KEY);
+        req.userId = verifiedToken.id;
+    } catch (error) {
+        return res.status(401).json({ error: 'Token inválido' });
+    }
+
+    if (!req.userId) {
+        return res.status(401).json({ error: 'Token inválido' });
+    }
+
+    next();
+
 };
 
 export const verifyAdmin = async (req, res, next) => {
@@ -26,4 +49,15 @@ export const verifyAdmin = async (req, res, next) => {
             2. Si no lo es, devolver un error 403 (Forbidden)
     
     */
+
+    try{
+        const usuario = await UsuariosService.getUsuarioById(req.userId);
+        if (!usuario || usuario.rol != 'admin'){
+            return res.status(403).json({ error: 'No tiene permisos para realizar esta acción'});
+        }
+    } catch (error){
+        return res.status(403).json({error: 'No sos administrador para realizar esta acción'})
+    }
+
+    next();
 };
