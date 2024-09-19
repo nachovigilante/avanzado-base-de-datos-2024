@@ -26,16 +26,18 @@ const register = async (req, res) => {
     }
 
     try {
+        const usuario_email = await usuariosService.getUsuarioByEmail(usuario.email)
+        if(usuario_email){
+            return res.status(400).json({message: "Ya hay un usuario con ese email"})
+        }
         //Genero Hash
         const salt = bcrypt.genSaltSync(10)
         const hash = bcrypt.hashSync(usuario.password, salt)
         console.log(hash)
 
         usuario.password = hash;
-        const usuario_email=usuariosService.getUsuarioByEmail(usuario.email)
-        if(usuario){
-            return res.status(400).json({message: "Ya hay un usuario con ese email"})
-        }
+        console.log(usuario)
+
         await usuariosService.createUsuario(usuario);
 
         return res.json({ message: "Usuario creado" })
@@ -62,20 +64,31 @@ const register = async (req, res) => {
        const usuario=req.body;
        
        if(!usuario.email||!usuario.password){
-           res.status(404).json({message:error.message})
+           return res.status(404).json({message:error.message})
        }
        
        try{
+            const usuario_db= await usuariosService.getUsuarioByEmail(usuario.email)
+            if(!usuario){
+                return res.status(400).json({message:"No hay un usuario asociado a ese mail"})
+            }
+            const password=usuario_db.password
+            const secret="Vamos Racing"
             const salt = bcrypt.genSaltSync(10)
             const hash = bcrypt.hashSync(usuario.password, salt)
             console.log(hash)
-
-            usuario.password = hash;
-           await usuariosService.getUsuarioByEmail(usuario.email); 
-           return res.status(200).send('Todo Ok')
+            const comparison=bcrypt.compareSync(password,hash)
+            console.log(comparison)
+            if(comparison){
+                const token = jwt.sign( usuario.id, secret, { algorithm: 'RS256' }, "30m");
+                return res.status(200).json({token:token})
+            }
+            if(!comparison){
+                return res.status(400).json({message:"Contraseña incorrecta"})
+            }
        }
        catch(err){
-          return res.status(500).json({message:error.message})
+          return res.status(500).json({message:err.message})
        }
     }
 
