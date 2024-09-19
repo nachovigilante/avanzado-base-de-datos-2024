@@ -24,7 +24,7 @@ Content-Type: application/json
 
 //PEDIDOS
 GET  http://localhost:3000/pedidos HTTP/1.1
-authorization: Bearer <eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzYwNTM5LCJleHAiOjE3MjY3NjIzMzl9.kLiw9cBoD1Tn3s49XYJ2RhCRTu49kQCp-_FFYsAA_Yg>
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzY1ODU2LCJleHAiOjM1MjY3NjU4NTZ9.3kH3P1zXCwZX1U7QZF8AwLPpWQh1GMReWVRupY6VfkA
 ####
 
 GET  http://localhost:3000/pedidos/1 HTTP/1.1
@@ -36,12 +36,23 @@ GET  http://localhost:3000/pedidos/2 HTTP/1.1
 ###
 
 POST  http://localhost:3000/pedidos HTTP/1.1
+authorization: Bearer eyJh<bGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzY1ODU2LCJleHAiOjM1MjY3NjU4NTZ9.3kH3P1zXCwZX1U7QZF8AwLPpWQh1GMReWVRupY6VfkA
 Content-Type: application/json
 
 {
-    "id_usuario":"",
-    "estado":"",
-    "fecha":""
+    "idPedido":"1",
+    "plato.id" :"1",
+    "plato.cantidad":"2",
+    "platos": [
+        {
+            "id": 1,
+            "cantidad": 2
+        },
+        {
+            "id": 2,
+            "cantidad": 1
+        }
+    ]
 }
 
 ###

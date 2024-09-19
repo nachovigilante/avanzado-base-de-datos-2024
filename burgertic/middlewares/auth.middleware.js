@@ -15,32 +15,33 @@ export const verifyToken = async (req, res, next) => {
     
         Recordar también que si sucede cualquier error en este proceso, deben devolver un error 401 (Unauthorized)
     */
-    const token = req.headers['authorization']
-    if(!token){
+    const header_token = req.headers['authorization']
+    console.log(header_token)
+    if(!header_token){
         return res.status(400).json({ message : "Token necesario" })
     }
-    const tokenParts = token.split(' ');
+    const tokenParts = header_token.split(' ');
     if (tokenParts[0] !== 'Bearer' || tokenParts.length !== 2) {
         return res.status(400).json({ message: "Formato del token no válido" });
     }
-
-    const token = tokenParts[1]; // Extraer el token real
-    const secret="Vamos Racing"
-    const comparisson = jwt.verify(token,secret)
-    console.log(comparisson)
-    console.log("Token",decoded)
-    const id = decoded.id;
-    if (!id) {
-        return res.status(401).json({ message: 'ID de usuario no encontrado en el token' });
+    const token = tokenParts[1];
+    try{
+        const secret="Vamos Racing"
+        const decoded = jwt.verify(token,secret)
+        const id=decoded.id
+        const usuario=UsuariosService.getUsuarioById(id)
+        if (usuario){
+            console.log(id)
+            req.id=id
+            next()
+        }
+        else{
+            return res.status(400).json({ message: "ID no válido" });
+        }
     }
-    
-    const usuario=UsuariosService.getUsuarioById(id)
-    if (usuario){
-        req.id=id
-        next()
-    }
-    else{
-        return res.status(400).json({ message: "ID no válido" });
+    catch(error){
+        
+        return res.status(401).json({ error: error });
     }
 };
 
@@ -55,8 +56,10 @@ export const verifyAdmin = async (req, res, next) => {
     
     */
    const id=req.id
-   const usuario=usuariosService.getUsuarioById(id)
-   if(usuario.admin==True){
+   const usuario= await usuariosService.getUsuarioById(id)
+   console.log(usuario)
+   console.log(usuario.admin)
+   if(usuario.admin===true){
     next()
    }
    else{
