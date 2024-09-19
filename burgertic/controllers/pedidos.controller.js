@@ -89,13 +89,16 @@ const createPedido = async (req, res) => {
     const platos = req.body.platos
     if (!platos) return res.status(400).json({ message: "El pedido debe tener platos" });
 
-    if (!Array.IsArray(platos)){ 
+    if (!Array.isArray(platos)){ 
         return res.status(400).json({ message: "Platos debe ser un array" });
     }
-
-    if(!platos.id|| !platos.cantidad){
+    platos.map((plato)=>
+    {
+        if(!plato['id']|| !plato['cantidad']){
         return res.status(400).json({message:'Platos tiene que tener id y cantidad'})
     }
+    })
+    
     try {
         await pedidosService.createPedido(idUser,platos);
         return res.status(201).send('Todo Ok')
