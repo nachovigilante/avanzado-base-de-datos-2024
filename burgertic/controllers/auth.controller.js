@@ -74,13 +74,11 @@ const register = async (req, res) => {
             }
             const password=usuario_db.password
             const secret="Vamos Racing"
-            const salt = bcrypt.genSaltSync(10)
-            const hash = bcrypt.hashSync(usuario.password, salt)
-            console.log(hash)
-            const comparison=bcrypt.compareSync(password,hash)
+            
+            const comparison=bcrypt.compareSync(usuario.password,password)
             console.log(comparison)
             if(comparison){
-                const token = jwt.sign( usuario.id, secret, { algorithm: 'RS256' }, "30m");
+                const token = jwt.sign({ id: usuario_db.id}, secret, { expiresIn: 30 * 60 });
                 return res.status(200).json({token:token})
             }
             if(!comparison){

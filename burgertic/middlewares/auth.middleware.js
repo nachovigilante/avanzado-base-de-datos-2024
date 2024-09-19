@@ -15,26 +15,26 @@ export const verifyToken = async (req, res, next) => {
     
         Recordar también que si sucede cualquier error en este proceso, deben devolver un error 401 (Unauthorized)
     */
-    if(!req.header.authorization)
-        return res.status(401).json({message:'Token no autorizado'})
-    const token = res.headers.authorization
+    const token = req.headers['authorization']
     if(!token){
         return res.status(400).json({ message : "Token necesario" })
     }
-    if(token.startsWith('Bearer')){
-        token.split(" ")[1]
+    const tokenParts = token.split(' ');
+    if (tokenParts[0] !== 'Bearer' || tokenParts.length !== 2) {
+        return res.status(400).json({ message: "Formato del token no válido" });
     }
-    else{
-        return res.status(400).json({message : "Formato del token no válido"})
-    }
+
+    const token = tokenParts[1]; // Extraer el token real
     const secret="Vamos Racing"
-    jwt.verify(token,secret, (err,decoded))
-    if (err){
-        return res.status(400).json({ message: "Token no válido" });
+    const comparisson = jwt.verify(token,secret)
+    console.log(comparisson)
+    console.log("Token",decoded)
+    const id = decoded.id;
+    if (!id) {
+        return res.status(401).json({ message: 'ID de usuario no encontrado en el token' });
     }
-    const id=decoded
     
-    usuario=UsuariosService.getUsuarioById(id)
+    const usuario=UsuariosService.getUsuarioById(id)
     if (usuario){
         req.id=id
         next()
