@@ -24,19 +24,19 @@ Content-Type: application/json
 
 //PEDIDOS
 GET  http://localhost:3000/pedidos HTTP/1.1
-authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzY1ODU2LCJleHAiOjM1MjY3NjU4NTZ9.3kH3P1zXCwZX1U7QZF8AwLPpWQh1GMReWVRupY6VfkA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzY1ODU2LCJleHAiOjM1MjY3NjU4NTZ9.3kH3P1zXCwZX1U7QZF8AwLPpWQh1GMReWVRupY6VfkA
 ####
 
 GET  http://localhost:3000/pedidos/1 HTTP/1.1
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzY1ODU2LCJleHAiOjM1MjY3NjU4NTZ9.3kH3P1zXCwZX1U7QZF8AwLPpWQh1GMReWVRupY6VfkA
 ###
 
-GET  http://localhost:3000/pedidos/2 HTTP/1.1
-
+GET  http://localhost:3000/pedidos/usuario/5 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzY1ODU2LCJleHAiOjM1MjY3NjU4NTZ9.3kH3P1zXCwZX1U7QZF8AwLPpWQh1GMReWVRupY6VfkA
 ###
 
 POST  http://localhost:3000/pedidos HTTP/1.1
-authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzY1ODU2LCJleHAiOjM1MjY3NjU4NTZ9.3kH3P1zXCwZX1U7QZF8AwLPpWQh1GMReWVRupY6VfkA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzY1ODU2LCJleHAiOjM1MjY3NjU4NTZ9.3kH3P1zXCwZX1U7QZF8AwLPpWQh1GMReWVRupY6VfkA
 Content-Type: application/json
 
 {
@@ -55,19 +55,22 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/pedidos/2/aceptar HTTP/1.1
-###
-
-PUT http://localhost:3000/pedidos/2/comenzar HTTP/1.1
+PUT http://localhost:3000/pedidos/1/aceptar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzY1ODU2LCJleHAiOjM1MjY3NjU4NTZ9.3kH3P1zXCwZX1U7QZF8AwLPpWQh1GMReWVRupY6VfkA
 
 ###
 
-PUT http://localhost:3000/pedidos/2/entregar HTTP/1.1
+PUT http://localhost:3000/pedidos/1/comenzar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzY1ODU2LCJleHAiOjM1MjY3NjU4NTZ9.3kH3P1zXCwZX1U7QZF8AwLPpWQh1GMReWVRupY6VfkA
 
+###
+
+PUT http://localhost:3000/pedidos/1/entregar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzY1ODU2LCJleHAiOjM1MjY3NjU4NTZ9.3kH3P1zXCwZX1U7QZF8AwLPpWQh1GMReWVRupY6VfkA
 ###
 
 DELETE http://localhost:3000/pedidos/2 HTTP/1.1
-authorization: Bearer  yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzY1ODU2LCJleHAiOjM1MjY3NjU4NTZ9.3kH3P1zXCwZX1U7QZF8AwLPpWQh1GMReWVRupY6VfkA
+Authorization: Bearer  yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzY1ODU2LCJleHAiOjM1MjY3NjU4NTZ9.3kH3P1zXCwZX1U7QZF8AwLPpWQh1GMReWVRupY6VfkA
 Content-Type: application/json
 
 {

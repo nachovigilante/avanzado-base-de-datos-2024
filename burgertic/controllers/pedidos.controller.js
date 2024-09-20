@@ -31,7 +31,7 @@ const getPedidosByUser = async (req, res) => {
             4. Devolver un mensaje de error si algo falló (status 500)
         
     */
-    const idUser = req.params.idUser
+    const idUser = req.params.id
     if (!idUser) return res.status(400).json({ message: "Se necesita un ID" });
     try {
         const pedidos = await pedidosService.getPedidosByUser(idUser)
@@ -63,7 +63,7 @@ const getPedidoById = async (req, res) => {
         if (!pedido) {
            return res.status(404).json({ message: "Pedido no encontrado" })
         }
-        res.json(pedido)
+        return res.json(pedido)
     }
     catch (error) {
        return res.status(500).json({ message: error.message })
@@ -101,7 +101,7 @@ const createPedido = async (req, res) => {
     
     try {
         await pedidosService.createPedido(idUser,platos);
-        return res.status(201).send('Todo Ok')
+        return res.status(201).json({message:'Todo Ok'})
     }
     catch (err) {
         return res.status(500).json({ message: err.message })
@@ -124,24 +124,24 @@ const aceptarPedido = async (req, res) => {
             7. Devolver un mensaje de error si algo falló (status 500)
         
     */
-    const id = parseInt(req.params.id);
+    const id = parse.Int(req.params.id);
+    console.log(id)
+    try{
+        const pedido=await pedidosService.getPedidoById(id)
+        if(!pedido){
+            return res.status(404).json({message:'No existe un pedido'})
+        }
+        console.log(pedido.estado)
+        if(pedido.estado !=="pendiente"){
+            return res.status(400).json({message:"El pedido ya fue aceptado anteriormente"})
+        }
+        pedido.estado="aceptado"
+        await pedidosService.updatePedido(id, pedido.estado)
+        return res.status(200).json({message:'Pedido aceptado'})
 
-    const pedido = PedidosService.getPedidoById(id);
-
-    if(!pedido){
-        return res.status(404).json({message:'No existe un pedido'})
-        
     }
-
-    if (pedido.estado !== "aceptado") {
-        return res.status(400).json({ message: 'Pedido no aceptado' })
-    }
-    try {
-        await pedidosService.getPedidoById(id);
-        return res.status(200).send('Todo Ok')
-    }
-    catch (err) {
-        return res.status(500).json({ message: err.message })
+    catch(err){
+        return res.status(400).json({message:err.message})
     }
 
 };
@@ -162,7 +162,7 @@ const comenzarPedido = async (req, res) => {
     */
    const id =parseInt(req.params.id)
 
-   const pedido=pedidosService.getPedidoById(id);
+   const pedido= await pedidosService.getPedidoById(id);
 
    if(!pedido){
        return res.status(404).json({message:'Pedido no existente.'})
@@ -170,13 +170,10 @@ const comenzarPedido = async (req, res) => {
    if(pedido.estado !== "aceptado"){
        return res.status(400).json({message:"El pedido no esta aceptado"})
    }
-   if(pedido.estado==="aceptado") {
-       pedido.estado="en camino"
-       return 
-   }
+    pedido.estado="en camino"
    try {
-    await pedidosService.updatePedido(id);
-    return res.status(200).send('Pedido en camino')
+    await pedidosService.updatePedido(id,pedido.estado);
+    return res.status(200).json({message:'Pedido en camino'})
 }
 catch (err) {
     return res.status(500).json({ message: err.message })
@@ -199,7 +196,7 @@ const entregarPedido = async (req, res) => {
     */
    const id =parseInt(req.params.id)
 
-   const pedido=pedidosService.getPedidoById(id);
+   const pedido= await pedidosService.getPedidoById(id);
 
    if(!pedido){
        return res.status(404).json({message:'Pedido no existente.'})
@@ -207,13 +204,10 @@ const entregarPedido = async (req, res) => {
    if(pedido.estado !== "en camino"){
        return res.status(400).json({message:"El pedido no esta en camino"})
    }
-   if(pedido.estado==="en camino") {
-       pedido.estado="entregado"
-       return 
-   }
+    pedido.estado="entregado"
    try {
-    await pedidosService.updatePedido(id);
-    return res.status(200).send('Pedido entregado')
+    await pedidosService.updatePedido(id,pedido.estado);
+    return res.status(200).json({message:'Pedido entregado'})
 }
 catch (err) {
     return res.status(500).json({ message: err.message })

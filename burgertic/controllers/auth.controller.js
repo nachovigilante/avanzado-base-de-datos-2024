@@ -78,7 +78,7 @@ const register = async (req, res) => {
             const comparison=bcrypt.compareSync(usuario.password,password)
             console.log(comparison)
             if(comparison){
-                const token = jwt.sign({ id: usuario_db.id}, secret, { expiresIn: 30000 * 60000 });
+                const token = jwt.sign({ id: usuario_db.id}, secret, { expiresIn: 30 * 60 });
                 return res.status(200).json({token:token})
             }
             if(!comparison){
