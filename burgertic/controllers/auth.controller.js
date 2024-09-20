@@ -40,7 +40,12 @@ const register = async (req, res) => {
 
         await usuariosService.createUsuario(usuario);
 
-        return res.json({ message: "Usuario creado" })
+        return res.json({ 
+            id: usuario.id,
+            nombre:usuario.nombre,
+            apellido:usuario.apellido,
+            email:usuario.email
+         })
     } catch (error) {
        return res.status(500).json({ message: error.message });
     }
@@ -79,7 +84,12 @@ const register = async (req, res) => {
             console.log(comparison)
             if(comparison){
                 const token = jwt.sign({ id: usuario_db.id}, secret, { expiresIn: 30 * 60 });
-                return res.status(200).json({token:token})
+                return res.status(200).json({token:token, usuario:{
+                    id: usuario_db.id,
+                    nombre:usuario_db.nombre,
+                    apellido:usuario_db.apellido,
+                    email:usuario_db.email
+                }})
             }
             if(!comparison){
                 return res.status(400).json({message:"Contraseña incorrecta"})

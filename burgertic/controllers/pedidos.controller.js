@@ -1,3 +1,4 @@
+import { json } from "express";
 import pedidosService from "../services/pedidos.service.js";
 import PedidosService from "../services/pedidos.service.js";
 
@@ -31,12 +32,12 @@ const getPedidosByUser = async (req, res) => {
             4. Devolver un mensaje de error si algo falló (status 500)
         
     */
-    const idUser = req.params.id
-    if (!idUser) return res.status(400).json({ message: "Se necesita un ID" });
+    const idUser = req.id
+    if (!idUser) return res.status(400).json({ message: "Se necesita un ID" })
     try {
         const pedidos = await pedidosService.getPedidosByUser(idUser)
         if (!pedidos) {
-            return res.status(404).json({ message: "No hay pedidos para ese usuario" })
+            return res.json([])
         }
         res.json(pedidos)
     }
