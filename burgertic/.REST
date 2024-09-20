@@ -40,7 +40,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxN
 Content-Type: application/json
 
 {
-    "idPedido":"1",
     "platos": [
         {
             "id": 1,
@@ -70,12 +69,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxN
 ###
 
 DELETE http://localhost:3000/pedidos/2 HTTP/1.1
-Authorization: Bearer  yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzY1ODU2LCJleHAiOjM1MjY3NjU4NTZ9.3kH3P1zXCwZX1U7QZF8AwLPpWQh1GMReWVRupY6VfkA
-Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzY1ODU2LCJleHAiOjM1MjY3NjU4NTZ9.3kH3P1zXCwZX1U7QZF8AwLPpWQh1GMReWVRupY6VfkA
 
-{
-
-}
 
 ###
 //PLATOS

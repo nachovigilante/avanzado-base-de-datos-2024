@@ -16,7 +16,6 @@ export const verifyToken = async (req, res, next) => {
         Recordar también que si sucede cualquier error en este proceso, deben devolver un error 401 (Unauthorized)
     */
     const header_token = req.headers.authorization
-    console.log(header_token)
     if(!header_token){
         return res.status(400).json({ message : "Token necesario" })
     }
@@ -25,14 +24,12 @@ export const verifyToken = async (req, res, next) => {
         return res.status(400).json({ message: "Formato del token no válido" });
     }
     const token = tokenParts[1];
-    console.log(token)
     try{
         const secret="Vamos Racing"
         const decoded = jwt.verify(token,secret)
         const id=decoded.id
         const usuario=UsuariosService.getUsuarioById(id)
         if (usuario){
-            console.log(id)
             req.id=id
             next()
         }
@@ -58,7 +55,6 @@ export const verifyAdmin = async (req, res, next) => {
     */
    const id=req.id
    const usuario= await usuariosService.getUsuarioById(id)
-   console.log(usuario.admin)
    if(usuario.admin===true){
     next()
    }

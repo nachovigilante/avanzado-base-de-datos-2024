@@ -82,7 +82,7 @@ const getPedidoById = async (id) => {
         result.platos = await getPlatosByPedido(id);
 
         await client.end();
-        return rows;
+        return rows[0];
     } catch (error) {
         await client.end();
         throw error;
