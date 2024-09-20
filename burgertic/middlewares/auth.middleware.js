@@ -14,8 +14,8 @@ export const verifyToken = async (req, res, next) => {
     
         Recordar también que si sucede cualquier error en este proceso, deben devolver un error 401 (Unauthorized)
     */
-    const step1 = req.headers['authorization'];
-    if(!authorization){
+    const step1 = req.headers['Authorization'];
+    if(!step1){
         return res.status(401).json({ error: 'No hay token'})
     }
 
