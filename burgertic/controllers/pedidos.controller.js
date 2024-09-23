@@ -6,7 +6,7 @@ res.json(pedidos);
 };
 
 const getPedidosByUser = async (req, res) => {
-    const idUsuario = req.user.id;
+    const idUsuario = req.userId;
     const pedidos = await PedidosService.getPedidosByUser(idUsuario);
     res.json(pedidos);
 };
@@ -21,7 +21,7 @@ const getPedidoById = async (req, res) => {
 };
 
 const createPedido = async (req, res) => {
-    const idUsuario = req.user.id;
+    const idUsuario = req.userId;
     const platos = req.body.platos;
     const pedido = await PedidosService.createPedido(idUsuario, platos);
     res.json({ message: "Pedido creado con éxito" });

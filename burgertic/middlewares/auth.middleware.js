@@ -14,25 +14,26 @@ export const verifyToken = async (req, res, next) => {
     
         Recordar también que si sucede cualquier error en este proceso, deben devolver un error 401 (Unauthorized)
     */
-    const step1 = req.headers['Authorization'];
+   console.log("ver1");
+    const step1 = req.headers['authorization'];
     if(!step1){
         return res.status(401).json({ error: 'No hay token'})
     }
 
-    const step2 = authorization.split(' ')[1];
-    if (!token || authorization.split(' ')[0] !== 'Bearer') {
-        return res.status(401).json({ error: 'Token inválido' });
+    const step2 = step1.split(' ')[1];
+    if (!step2 || step1.split(' ')[0] !== 'Bearer') {
+        return res.status(401).json({ error: 'Token inválido1' });
     }
 
     try {
-        const verifiedToken = jwt.verify(token, process.env.SECRET_KEY);
+        const verifiedToken = jwt.verify(step2, "tu_secreto"/*process.env.SECRET_KEY*/);
         req.userId = verifiedToken.id;
     } catch (error) {
-        return res.status(401).json({ error: 'Token inválido' });
+        return res.status(401).json({ error11: 'Token inválido2', error });
     }
 
     if (!req.userId) {
-        return res.status(401).json({ error: 'Token inválido' });
+        return res.status(401).json({ error: 'Token inválido3' });
     }
 
     next();
@@ -52,7 +53,7 @@ export const verifyAdmin = async (req, res, next) => {
 
     try{
         const usuario = await UsuariosService.getUsuarioById(req.userId);
-        if (!usuario || usuario.rol != 'admin'){
+        if (!usuario || usuario.admin === false){
             return res.status(403).json({ error: 'No tiene permisos para realizar esta acción'});
         }
     } catch (error){

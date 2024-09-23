@@ -27,7 +27,7 @@ const register = async (req, res) => {
         nuevoUsuario 
     });
 } catch (error) {
-        res.status(500).json({ message: "Error al crear usuario" })
+        res.status(500).json({ message: "Error al crear usuario", error })
 }};
 
 const login = async (req, res) => {
@@ -47,7 +47,7 @@ const login = async (req, res) => {
     return res.status(400).json({ message: "Contraseña incorrecta" });
   }
 
-  const token = jwt.sign({ id: usuario.id }, process.env.SECRET, {
+  const token = jwt.sign({ id: usuario.id }, "tu_secreto"/*process.env.SECRET*/, {
     expiresIn: "30m",
   });
 
