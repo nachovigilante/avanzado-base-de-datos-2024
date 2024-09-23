@@ -100,4 +100,20 @@ const register = async (req, res) => {
        }
     }
 
-    export default { register, login }
+    const updateAdmin= async(req,res)=>{
+        const id=req.params.id
+
+        if(!id){
+            res.status(404).json({message:'No hay id'})
+        }
+
+        try{
+            await usuariosService.updateAdmin(id);
+
+        }
+        catch(err){
+           return res.status(500).json({message:'Error'})
+        }
+    }
+
+    export default { register, login,updateAdmin }

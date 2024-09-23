@@ -19,6 +19,9 @@ Content-Type: application/json
     "email":"setton@gmail.com",
     "password":"KAKA"
 }
+###
+PUT http://localhost:9000/auth/admin/1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzY1ODU2LCJleHAiOjM1MjY3NjU4NTZ9.3kH3P1zXCwZX1U7QZF8AwLPpWQh1GMReWVRupY6VfkA
 
 ###
 
@@ -31,7 +34,7 @@ GET  http://localhost:3000/pedidos/1 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzY1ODU2LCJleHAiOjM1MjY3NjU4NTZ9.3kH3P1zXCwZX1U7QZF8AwLPpWQh1GMReWVRupY6VfkA
 ###
 
-GET  http://localhost:3000/pedidos/usuario/5 HTTP/1.1
+GET  http://localhost:3000/pedidos/usuario HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzI2NzY1ODU2LCJleHAiOjM1MjY3NjU4NTZ9.3kH3P1zXCwZX1U7QZF8AwLPpWQh1GMReWVRupY6VfkA
 ###
 
