@@ -107,13 +107,25 @@ const register = async (req, res) => {
             res.status(404).json({message:'No hay id'})
         }
 
-        try{
-            await usuariosService.updateAdmin(id);
+        
+          const usuario=  await usuariosService.getUsuarioById(id);
 
-        }
-        catch(err){
-           return res.status(500).json({message:'Error'})
-        }
+          if (!usuario){
+              return res.status(404).json({message:'El usuario no existe'})
+          }
+
+          if(usuario.admin){
+              return res.status(400).json({message:'El usuario ya es admin'})
+          }
+
+          try{
+              await usuariosService.updateAdmin(id);
+            }catch(error){
+                return res.status(500).json({message:'Error al final'})
+            }
+          
+          
+        
     }
 
     export default { register, login,updateAdmin }
