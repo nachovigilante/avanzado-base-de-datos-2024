@@ -182,7 +182,7 @@ const updatePedido = async (id, estado) => {
 
     try {
         const { rows } = await client.query(
-            "UPDATE pedidos SET estado = $1 WHERE id = $2",
+            "UPDATE pedidos SET estado = $1 WHERE id = $2", 
             [estado, id]
         );
 
