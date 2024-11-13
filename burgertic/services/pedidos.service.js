@@ -82,7 +82,7 @@ const getPedidoById = async (id) => {
         result.platos = await getPlatosByPedido(id);
 
         await client.end();
-        return rows;
+        return rows[0];
     } catch (error) {
         await client.end();
         throw error;
@@ -182,7 +182,7 @@ const updatePedido = async (id, estado) => {
 
     try {
         const { rows } = await client.query(
-            "UPDATE pedidos SET estado = $1 WHERE id = $2",
+            "UPDATE pedidos SET estado = $1 WHERE id = $2", 
             [estado, id]
         );
 
