@@ -1,8 +1,9 @@
+import { Pedido } from "../models/pedidos.model.js";
 import { config } from "../db.js";
 import pkg from "pg";
 const { Client } = pkg;
 
-const getPlatosByPedido = async (idPedido) => {
+/* const getPlatosByPedido = async (idPedido) => {
     const client = new Client(config);
     await client.connect();
 
@@ -36,9 +37,11 @@ const getPlatosByPedido = async (idPedido) => {
         await client.end();
         throw error;
     }
-};
+}; */
 
-const getPedidos = async () => {
+const getPlatosByPedido = async
+
+/* const getPedidos = async () => {
     const client = new Client(config);
     await client.connect();
 
@@ -64,8 +67,11 @@ const getPedidos = async () => {
         throw error;
     }
 };
+ */
+const getPedidos = async() => await Pedido.findAll();
 
-const getPedidoById = async (id) => {
+
+/* const getPedidoById = async (id) => {
     const client = new Client(config);
     await client.connect();
 
@@ -87,9 +93,16 @@ const getPedidoById = async (id) => {
         await client.end();
         throw error;
     }
-};
+}; */
 
-const getPedidosByUser = async (idUsuario) => {
+const getPedidoById= async (id)=> 
+ await Pedido.findAll({
+     where:{
+         id:id,
+     },
+ }) ;
+
+/* const getPedidosByUser = async (idUsuario) => {
     const client = new Client(config);
     await client.connect();
 
@@ -118,8 +131,16 @@ const getPedidosByUser = async (idUsuario) => {
         throw error;
     }
 };
+ */
 
-const createPedido = async (idUsuario, platos) => {
+const getPedidosByUser=  async(idUsuario) => 
+await Pedido.findAll({
+    where:{
+        idUsuario:idUsuario,
+    },
+});
+
+/* const createPedido = async (idUsuario, platos) => {
     const client = new Client(config);
     await client.connect();
 
@@ -168,8 +189,16 @@ const createPedido = async (idUsuario, platos) => {
         throw error;
     }
 };
+ */
 
-const updatePedido = async (id, estado) => {
+const createPedido = async (pedido) => 
+await Pedido.create({
+    fecha:pedido.fecha,
+    idUsuario:pedido.idUsuario,
+});
+
+
+/* const updatePedido = async (id, estado) => {
     if (
         estado !== "aceptado" &&
         estado !== "en camino" &&
@@ -192,9 +221,16 @@ const updatePedido = async (id, estado) => {
         await client.end();
         throw error;
     }
-};
+}; */
+const updatePedido = async (id,newData) => {
+    const pedido = await Pedido.findByPk(id);
 
-const deletePedido = async (id) => {
+    if(!pedido) throw new Error ("Pedido no encontrado");
+    
+    pedido.fecha =  newData.fecha,
+    pedido.estado = newData.estado
+}
+/* const deletePedido = async (id) => {
     const client = new Client(config);
     await client.connect();
 
@@ -210,8 +246,18 @@ const deletePedido = async (id) => {
         await client.end();
         throw error;
     }
-};
+}; */
 
+const deletePedido= async (id) =>{
+const pedido = await Pedido.findByPk(id);
+
+if(!pedido){
+    throw new Error ("Pedido no encontrado");
+}
+
+await pedido.destroy();
+
+}
 export default {
     getPedidos,
     getPedidoById,
