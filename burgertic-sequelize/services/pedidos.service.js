@@ -1,7 +1,5 @@
 import { Pedido } from "../models/pedidos.model.js";
-import { config } from "../db.js";
-import pkg from "pg";
-const { Client } = pkg;
+
 
 /* const getPlatosByPedido = async (idPedido) => {
     const client = new Client(config);
@@ -39,7 +37,6 @@ const { Client } = pkg;
     }
 }; */
 
-const getPlatosByPedido = async
 
 /* const getPedidos = async () => {
     const client = new Client(config);

@@ -2,11 +2,12 @@ POST http://localhost:9000/register HTTP/1.1
 Content-Type: application/json
 
 {
+    "id": 12473,
     "nombre":"Maxi",
     "apellido":"Setto",
     "email":"Maxisetto@gmail.com",
     "password":"aaa",
-    "admin":true 
+    "admin":false 
 }
 
 ###
