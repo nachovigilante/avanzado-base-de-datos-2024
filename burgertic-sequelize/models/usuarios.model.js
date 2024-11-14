@@ -28,7 +28,7 @@ Usuario.init(
     },
     {
         sequelize,
-        modelName:"pedidos",
+        modelName:"usuarios",
         timestamps:false,
     }
 );
