@@ -71,14 +71,32 @@ await Usuario.findAll({
         throw error;
     }
 }; */
-const createUsuario = async (usuario) => 
-    Usuario.create({
-        nombre:usuario.nombre,
+const createUsuario = async (usuario) => {
+    console.log("Datos recibidos:");
+
+    if (!usuario) throw new Error("No se encuentran los datos de usuario");
+
+    const existingUser = await Usuario.findOne({
+        where: { email: usuario.email },
+        raw: true,
+    });
+
+    console.log("Resultado de la búsqueda:", existingUser);
+
+    if (existingUser) throw new Error("El correo ya está registrado");
+
+    await Usuario.create({
+        nombre: usuario.nombre,
         apellido: usuario.apellido,
         password: usuario.password,
         email: usuario.email,
-        admin: usuario.admin
-});
+        admin: usuario.admin,
+    });
+
+    console.log("Usuario creado exitosamente");
+};
+
+
 
 
 
