@@ -21,12 +21,13 @@ const getAllUsuarios = async () => await Usuario.findAll();
     }
 };
  */
-    const getUsuarioByEmail = async (email)  =>
+    const getUsuarioByEmail = async (email)  =>{
+       console.log(email)
         await Usuario.findAll({
             where:{
                 email:email,
             },
-        });
+        });}
 
 /* const getUsuarioById = async (id) => {
     const client = new Client(config);
