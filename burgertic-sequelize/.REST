@@ -2,10 +2,10 @@ POST http://localhost:9000/auth/register HTTP/1.1
 Content-Type: application/json
 
 {
-    "nombre":"cami",
-    "apellido":"picca",
-    "email":"camipicca@gmail.com",
-    "password":"123",
+    "nombre":"mac",
+    "apellido":"book",
+    "email":"macbook2@gmail.com",
+    "password":"apple",
     "admin": false
 }
 
@@ -15,8 +15,8 @@ POST http://localhost:9000/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"camipicca@gmail.com",
-    "password":"123"
+    "email":"root@root.com",
+    "password":"root"
 }
 
 ###
@@ -24,6 +24,9 @@ Content-Type: application/json
 //Pedidos
 
 GET http://localhost:9000/pedidos HTTP/1.1
+Authorization: "Bearer" eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzMxNzk2MDAwLCJleHAiOjE3MzE3OTc4MDB9.7UfIvXMPDafibfjhJJ-snw34SvCyBpK3HIaATrwuqkU
 
 ###
 
+GET http://localhost:9000/pedidos/usuario HTTP/1.1
+Authorization: "Bearer" eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzMxNzk1Njc0LCJleHAiOjE3MzE3OTc0NzR9.2CNu-L32h4S6JpTEnopO2MXuYYUTUmewoogp3Pq6W5k
