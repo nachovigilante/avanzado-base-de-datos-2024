@@ -188,11 +188,28 @@ await Pedido.findAll({
 };
  */
 
-const createPedido = async (pedido) => 
-await Pedido.create({
-    fecha:pedido.fecha,
-    idUsuario:pedido.idUsuario,
-});
+const createPedido = async (pedido) => {
+    console.log("Datos recibidos:", pedido);
+    console.log(pedido.idUsuario)
+    if (!pedido) throw new Error("No se encuentran datos de pedido");
+    if(!pedido.idUsuario) throw new Error("No hay IdUsuario")
+    const nuevoPedido = await Pedido.create({
+        fecha: pedido.fecha,
+        idUsuario: pedido.id_Usuario,
+        estado: pedido.estado,
+    });
+
+    console.log("Pedido creado exitosamente:", nuevoPedido);
+
+    return {
+        idPedido: nuevoPedido.id, 
+        fecha: new Date(),
+        idUsuario: nuevoPedido.id_usuario,
+        estado: "pendiente",
+        platos: pedido.platos,
+    };
+};
+
 
 
 /* const updatePedido = async (id, estado) => {

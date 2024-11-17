@@ -43,7 +43,6 @@ export const verifyAdmin = async (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.SECRET);
-
         if (!decoded.id)
             return res.status(401).json({ message: "Token inválido" });
 

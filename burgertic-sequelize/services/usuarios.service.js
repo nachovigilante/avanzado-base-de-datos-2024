@@ -98,7 +98,7 @@ const getUsuarioById = async (id) => {
     }
 }; */
 const createUsuario = async (usuario) => {
-    console.log("Datos recibidos:");
+    console.log("Datos recibidos:",usuario);
 
     if (!usuario) throw new Error("No se encuentran los datos de usuario");
 

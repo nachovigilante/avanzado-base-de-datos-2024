@@ -18,7 +18,8 @@ Pedido.init(
         },
         id_usuario:{
             type: DataTypes.INTEGER,
-            foreignKey:true,
+            allowNull: false,
+            field: "id_usuario"
         },
     },
     {
