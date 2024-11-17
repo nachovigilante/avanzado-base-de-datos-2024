@@ -12,6 +12,7 @@ const getPedidos = async (req, res) => {
 const getPedidosByUser = async (req, res) => {
     try {
         const pedidos = await PedidosService.getPedidosByUser(req.idUsuario);
+        console.log(req.idUsuario,"asacd")
         res.json(pedidos);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -69,7 +70,8 @@ const aceptarPedido = async (req, res) => {
 
     try {
         const pedido = await PedidosService.getPedidoById(id);
-
+        console.log(pedido)
+        console.log(pedido.estado)
         if (!pedido)
             return res.status(404).json({ message: "Pedido no encontrado" });
         if (pedido.estado !== "pendiente")

@@ -19,7 +19,7 @@ Pedido.init(
         id_usuario:{
             type: DataTypes.INTEGER,
             allowNull: false,
-            field: "id_usuario"
+            
         },
     },
     {

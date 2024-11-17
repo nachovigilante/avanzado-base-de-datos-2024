@@ -1,4 +1,6 @@
 import { Pedido } from "../models/pedidos.model.js";
+import { Plato } from "../models/platos.model.js";
+import { PlatoxPedido } from "../models/pedidoXplatos.model.js";
 
 
 /* const getPlatosByPedido = async (idPedido) => {
@@ -65,7 +67,7 @@ import { Pedido } from "../models/pedidos.model.js";
     }
 };
  */
-const getPedidos = async() => await Pedido.findAll();
+const getPedidos = async() =>{ await Pedido.findAll();}
 
 
 /* const getPedidoById = async (id) => {
@@ -92,12 +94,14 @@ const getPedidos = async() => await Pedido.findAll();
     }
 }; */
 
-const getPedidoById= async (id)=> 
- await Pedido.findAll({
+const getPedidoById= async (id)=> {
+ const rta= await Pedido.findOne({
      where:{
          id:id,
      },
- }) ;
+     
+ })
+ return rta; };
 
 /* const getPedidosByUser = async (idUsuario) => {
     const client = new Client(config);
@@ -133,7 +137,7 @@ const getPedidoById= async (id)=>
 const getPedidosByUser=  async(idUsuario) => 
 await Pedido.findAll({
     where:{
-        idUsuario:idUsuario,
+        id_usuario:idUsuario,
     },
 });
 
@@ -188,27 +192,40 @@ await Pedido.findAll({
 };
  */
 
-const createPedido = async (pedido) => {
-    console.log("Datos recibidos:", pedido);
-    console.log(pedido.idUsuario)
-    if (!pedido) throw new Error("No se encuentran datos de pedido");
-    if(!pedido.idUsuario) throw new Error("No hay IdUsuario")
-    const nuevoPedido = await Pedido.create({
-        fecha: pedido.fecha,
-        idUsuario: pedido.id_Usuario,
-        estado: pedido.estado,
-    });
+const createPedido = async (idUsuario , platos) => {
+    try {
+        const nuevoPedido = await Pedido.create({
+            id_usuario: idUsuario,
+            fecha: new Date(),
+            estado: 'pendiente',
+        });
+        console.log(idUsuario)
 
-    console.log("Pedido creado exitosamente:", nuevoPedido);
+        const idPedido = nuevoPedido.id;
 
-    return {
-        idPedido: nuevoPedido.id, 
-        fecha: new Date(),
-        idUsuario: nuevoPedido.id_usuario,
-        estado: "pendiente",
-        platos: pedido.platos,
-    };
+        for (let plato of platos) {
+            const platoExistente = await Plato.findOne({
+                where: { nombre: plato.nombre },
+            });
+
+            if (!platoExistente) {
+                throw new Error(`Plato con nombre ${plato.nombre} no encontrado`);
+            }
+
+            await PlatoxPedido.create({
+                id_pedido: idPedido,
+                id_plato: platoExistente.id,
+                cantidad: plato.cantidad,
+            });
+        }
+
+        return nuevoPedido;
+    } catch (error) {
+        console.error("Error al crear el pedido:", error.message);
+        throw error;
+    }
 };
+
 
 
 
@@ -236,13 +253,22 @@ const createPedido = async (pedido) => {
         throw error;
     }
 }; */
-const updatePedido = async (id,newData) => {
+const updatePedido = async (id,estado) => {
+    
+    if(estado !=="aceptado"&&
+        estado!=="en camino"&&
+        estado!=="entregado"
+    ) throw new Error("El pedido no esta en un estado correcto")
     const pedido = await Pedido.findByPk(id);
 
     if(!pedido) throw new Error ("Pedido no encontrado");
     
-    pedido.fecha =  newData.fecha,
-    pedido.estado = newData.estado
+    pedido.fecha =  new Date(),
+    pedido.estado = estado
+
+    await pedido.save();
+
+    return pedido;
 }
 /* const deletePedido = async (id) => {
     const client = new Client(config);
