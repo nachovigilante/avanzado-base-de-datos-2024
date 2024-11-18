@@ -1,9 +1,10 @@
 import UsuariosService from "../services/usuarios.service.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import "dotenv/config"; 
 
 const register = async (req, res) => {
-    const usuario = req.body;
+    const { usuario } = req.body;
 
     if (!usuario)
         return res.status(400).json({ message: "Se necesita un usuario" });
@@ -51,7 +52,8 @@ const login = async (req, res) => {
         return res.status(400).json({ message: "Contraseña incorrecta" });
 
     try {
-        const token = jwt.sign({ id: usuario.id }, process.env.SECRET, {
+        const secret = process.env.SECRET || "secreto"; 
+        const token = jwt.sign({ id: usuario.id }, secret, {
             expiresIn: "30m",
         });
         res.json({
