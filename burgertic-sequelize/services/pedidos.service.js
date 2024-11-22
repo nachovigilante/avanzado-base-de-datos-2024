@@ -1,6 +1,6 @@
 import { Pedidos } from '../models/pedidos.model.js';
 import { Plato } from '../models/platos.model.js';
-import { PlatosXPedidos } from '../models/platosxpedidos.model.js';
+import { PlatosxPedidos as PlatosXPedidos } from '../models/platosxpedidos.model.js';
 import { Usuarios } from '../models/usuarios.model.js';
 
 const getPlatosByPedido = async (idPedido) => {

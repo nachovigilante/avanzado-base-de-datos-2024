@@ -1,9 +1,9 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../db.js";
 
-export class pltosxpedidos extends Model {}
+export class PlatosxPedidos extends Model {}
 
-pltosxpedidos.init(
+PlatosxPedidos.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -11,7 +11,7 @@ pltosxpedidos.init(
             primaryKey: true,
         },
         cantidad: {
-            type: DataTypes.INT,
+            type: DataTypes.INTEGER,
         },
        
     },

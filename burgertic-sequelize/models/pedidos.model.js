@@ -17,7 +17,7 @@ Pedidos.init(
             type: DataTypes.DATE,
         },
         estado: {
-            type: DataTypes.CHART,
+            type: DataTypes.STRING,
         },
     },
     {

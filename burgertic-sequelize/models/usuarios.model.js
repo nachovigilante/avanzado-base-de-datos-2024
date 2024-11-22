@@ -11,16 +11,16 @@ Usuarios.init(
             primaryKey: true,
         },
         apellido: {
-            type: DataTypes.CHART,
+            type: DataTypes.STRING,
         },
         nombre: {
-            type: DataTypes.CHART,
+            type: DataTypes.STRING,
         },
         email: {
-            type: DataTypes.CHART,
+            type: DataTypes.STRING,
         },
         password: {
-            type: DataTypes.CHART,
+            type: DataTypes.STRING,
         },
         admin: {
             type: DataTypes.BOOLEAN,
