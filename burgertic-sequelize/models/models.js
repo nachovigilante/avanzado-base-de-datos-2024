@@ -1,10 +1,14 @@
-import { Pedidos } from "./pedidos.model"
-import { Plato } from "./platos.model";
-import { PlatosxPedidos } from "./platosxpedidos.model";
-import { Usuarios } from "./usuarios.model"
+import { sequelize } from "../db.js";
+import { Pedidos } from "./pedidos.model.js"
+import { Plato } from "./platos.model.js";
+import { PlatosxPedidos } from "./platosxpedidos.model.js";
+import { Usuarios } from "./usuarios.model.js"
 
-const defModelos = async()=>{
+export const defModelos = async()=>{
+    Pedidos.belongsTo(Usuarios);
     Usuarios.hasMany(Pedidos);
     Pedidos.belongsToMany(Plato, {through: PlatosxPedidos});
     Plato.belongsToMany(Pedidos, {through: PlatosxPedidos});
-}
+
+    //await sequelize.sync({force: true, alter: true})
+}  
