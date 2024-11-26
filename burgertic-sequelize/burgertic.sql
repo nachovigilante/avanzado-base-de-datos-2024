@@ -1,4 +1,4 @@
-
+/*
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -184,3 +184,4 @@ INSERT INTO public.platos (tipo, nombre, precio, descripcion) VALUES
 INSERT INTO public.usuarios (nombre, apellido, email, password, admin) VALUES
 ('Ignacio', 'Vigilante', 'nacho@vigilante.com', '$2a$10$77dLGLC9.nceIxG/zWIt/uctZooitGgP9M7wMmzVHvFGQn/iX1z2i', false), 
 ('root', 'root', 'root@root.com', '$2a$10$yv0TkSGmqqiuD8pRTc18XOJ0p1YvR69WoVdr.3oiN82Jo8GvSfBo6', true);
+*/

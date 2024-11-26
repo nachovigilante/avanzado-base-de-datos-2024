@@ -1,5 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../db.js";
+import { Pedidos } from "./pedidos.model.js";
 
 export class PlatosxPedidos extends Model {}
 
@@ -13,6 +14,12 @@ PlatosxPedidos.init(
         cantidad: {
             type: DataTypes.INTEGER,
         },
+        PedidoId: {
+            type: DataTypes.INTEGER,
+        },
+        platoId: {
+            type: DataTypes.INTEGER,
+        }
        
     },
     {
@@ -21,3 +28,11 @@ PlatosxPedidos.init(
         timestamps: false,
     }
 );
+
+
+/*Pedidos.hasMany(PlatosxPedidos, {
+    foreignKey: 'PedidoId'
+});
+PlatosxPedidos.belongsTo(Pedidos, {
+    foreignKey: 'id'
+});*/

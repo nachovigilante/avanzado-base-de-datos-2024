@@ -10,15 +10,15 @@ Pedidos.init(
             autoIncrement: true,
             primaryKey: true,
         },
-        tipo: {
-            type: DataTypes.STRING,
-        },
         fecha: {
             type: DataTypes.DATE,
         },
         estado: {
             type: DataTypes.STRING,
         },
+        UsuarioId: {
+            type: DataTypes.INTEGER
+        }
     },
     {
         sequelize,

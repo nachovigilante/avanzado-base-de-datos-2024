@@ -5,10 +5,18 @@ import { PlatosxPedidos } from "./platosxpedidos.model.js";
 import { Usuarios } from "./usuarios.model.js"
 
 export const defModelos = async()=>{
-    Pedidos.belongsTo(Usuarios);
-    Usuarios.hasMany(Pedidos);
-    Pedidos.belongsToMany(Plato, {through: PlatosxPedidos});
-    Plato.belongsToMany(Pedidos, {through: PlatosxPedidos});
+    Pedidos.belongsTo(Usuarios, { foreignKey: 'UsuarioId' });
+    Usuarios.hasMany(Pedidos,{ foreignKey: 'UsuarioId' });
+    Pedidos.belongsToMany(Plato, {through: PlatosxPedidos,
+        foreignKey: 'PedidoId',
+        otherKey: 'platoId',
+        as: 'platos',});
+    Plato.belongsToMany(Pedidos, {through: PlatosxPedidos,
+        foreignKey: 'platoId',
+        otherKey: 'PedidoId',
+        as: 'pedidos',});
 
     //await sequelize.sync({force: true, alter: true})
+    await sequelize.sync({ alter: true });
 }  
+console.log("Pase x aca");

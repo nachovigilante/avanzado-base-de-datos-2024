@@ -38,12 +38,12 @@ const getPedidosByUser  = async (idUsuario) => {
 };
 
 const createPedido = async (idUsuario, platos) => {
-    const pedido = await Pedidos.create({ id_usuario: idUsuario, fecha: new Date(), estado: 'pendiente' });
-    
+    const pedido = await Pedidos.create({ UsuarioId: idUsuario, fecha: new Date(), estado: 'pendiente' });
+
     for (let plato of platos) {
         await PlatosXPedidos.create({
-            id_pedido: pedido.id,
-            id_plato: plato.id,
+            PedidoId: pedido.id,
+            platoId: plato.id,
             cantidad: plato.cantidad,
         });
     }
@@ -52,12 +52,39 @@ const createPedido = async (idUsuario, platos) => {
 };
 
 const updatePedido = async (id, estado) => {
-    const pedido = await Pedidos.findByPk(id);
+    /*const pedido = await Pedidos.findByPk(id);
     if (!pedido) throw new Error("Pedido no encontrado");
-    
+    console.log(pedido);
     pedido.estado = estado;
     await pedido.save();
-    return pedido;
+    return pedido;*/
+
+    try {
+        if (estado !== "aceptado" && estado !== "en camino" && estado !== "entregado") {
+        throw new Error("Estado inválido");
+        }
+        
+        const pedido = await Pedidos.findByPk(id);
+        if(!pedido){
+            throw new Error("Pedido no encontrado")
+        }
+        
+        const updatePedido = await Pedidos.update (
+            {
+                estado: estado,
+            },
+            {
+                where: {
+                    id: id,
+                },
+            }
+        )
+        return updatePedido;
+    }
+    catch(error){
+        throw error;
+    }
+
 };
 
 const deletePedido = async (id) => {
