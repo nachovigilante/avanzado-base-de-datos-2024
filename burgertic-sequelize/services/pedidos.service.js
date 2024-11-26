@@ -3,7 +3,7 @@ import { Plato } from '../models/platos.model.js';
 import { PlatosxPedidos as PlatosXPedidos } from '../models/platosxpedidos.model.js';
 import { Usuarios } from '../models/usuarios.model.js';
 
-/*const getPlatosByPedido = async (idPedido) => {
+const getPlatosByPedido = async (idPedido) => {
     const platosXPedidos = await PlatosXPedidos.findAll({
         where: { id_pedido: idPedido },
         //include: [{ model: Plato }],
@@ -15,7 +15,7 @@ import { Usuarios } from '../models/usuarios.model.js';
         cantidad: p.cantidad,
     }));
 };
-*/
+
 const getPedidos = async () => {
     const pedidos = await Pedidos.findAll({ include: [Usuarios] });
     return pedidos;
@@ -39,7 +39,16 @@ const getPedidosByUser  = async (UsuarioId) => {
 };
 
 const createPedido = async (idUsuario, platos) => {
-  const pedido = await Pedido.create({
+    for (let plato of platos) {
+        await PlatosXPedidos.create({
+            PedidoId: pedido.id, 
+            platoId: plato.id,
+            cantidad: plato.cantidad,
+        });
+    }
+    
+    return pedido;
+  /*  const pedido = await Pedido.create({
     UsuarioId: idUsuario,
     fecha: new Date(),
     estado: "pendiente",
@@ -52,6 +61,7 @@ const createPedido = async (idUsuario, platos) => {
   }));
 
   await PedidosPlatos.bulkCreate(platosData);
+  */
 
   return pedido;
 };

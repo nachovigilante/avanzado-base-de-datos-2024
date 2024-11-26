@@ -41,6 +41,8 @@ const getPedidoById = async (req, res) => {
 const createPedido = async (req, res) => {
     const platos = req.body.platos;
 
+    console.log ("pase por el createPedido")
+
     if (!platos)
         return res
             .status(400)
