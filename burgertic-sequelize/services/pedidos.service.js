@@ -39,17 +39,21 @@ const getPedidosByUser  = async (UsuarioId) => {
 };
 
 const createPedido = async (idUsuario, platos) => {
-    const pedido = await Pedidos.create({ UsuarioId: idUsuario, fecha: new Date(), estado: 'pendiente' });
+  const pedido = await Pedido.create({
+    UsuarioId: idUsuario,
+    fecha: new Date(),
+    estado: "pendiente",
+  });
 
-    for (let plato of platos) {
-        await PlatosXPedidos.create({
-            PedidoId: pedido.id,
-            platoId: plato.id,
-            cantidad: plato.cantidad,
-        });
-    }
-    
-    return pedido;
+  const platosData = platos.map((plato) => ({
+    idPedido: pedido.id,
+    idPlato: plato.id,
+    cantidad: plato.cantidad,
+  }));
+
+  await PedidosPlatos.bulkCreate(platosData);
+
+  return pedido;
 };
 
 const updatePedido = async (id, estado) => {
