@@ -3,10 +3,10 @@ import { Plato } from '../models/platos.model.js';
 import { PlatosxPedidos as PlatosXPedidos } from '../models/platosxpedidos.model.js';
 import { Usuarios } from '../models/usuarios.model.js';
 
-const getPlatosByPedido = async (idPedido) => {
+/*const getPlatosByPedido = async (idPedido) => {
     const platosXPedidos = await PlatosXPedidos.findAll({
         where: { id_pedido: idPedido },
-        include: [{ model: Plato }],
+        //include: [{ model: Plato }],
     });
 
     return platosXPedidos.map(p => ({
@@ -15,7 +15,7 @@ const getPlatosByPedido = async (idPedido) => {
         cantidad: p.cantidad,
     }));
 };
-
+*/
 const getPedidos = async () => {
     const pedidos = await Pedidos.findAll({ include: [Usuarios] });
     return pedidos;
@@ -24,15 +24,16 @@ const getPedidos = async () => {
 const getPedidoById = async (id) => {
     const pedido = await Pedidos.findOne({
         where: { id },
-        include: [{ model: PlatosXPedidos, include: [Plato] }],
+       // include: [{ model: PlatosXPedidos, include: [Plato] }],
     });
+    const platos = pedido.getPlatos()
     return pedido;
 };
 
-const getPedidosByUser  = async (idUsuario) => {
+const getPedidosByUser  = async (UsuarioId) => {
     const pedidos = await Pedidos.findAll({
-        where: { id_usuario: idUsuario },
-        include: [{ model: PlatosXPedidos, include: [Plato] }],
+        where: { UsuarioId: UsuarioId },
+       // include: [{ model: PlatosXPedidos, include: [Plato] }],
     });
     return pedidos;
 };
@@ -96,6 +97,7 @@ const deletePedido = async (id) => {
 };
 
 export default {
+   getPedidoById,
     getPedidos,
     getPedidoById,
     getPedidosByUser ,

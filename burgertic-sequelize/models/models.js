@@ -15,8 +15,8 @@ export const defModelos = async()=>{
         foreignKey: 'platoId',
         otherKey: 'PedidoId',
         as: 'pedidos',});
-
+        console.log("Pase x defModelos");
     //await sequelize.sync({force: true, alter: true})
-    await sequelize.sync({ alter: true });
+    //await sequelize.sync({ alter: true });
 }  
 console.log("Pase x aca");

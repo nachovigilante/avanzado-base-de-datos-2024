@@ -30,7 +30,7 @@ PlatosxPedidos.init(
 );
 
 
-/*Pedidos.hasMany(PlatosxPedidos, {
+/*.hasMany(PlatosxPedidos, {
     foreignKey: 'PedidoId'
 });
 PlatosxPedidos.belongsTo(Pedidos, {

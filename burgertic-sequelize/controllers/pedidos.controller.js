@@ -20,11 +20,16 @@ const getPedidosByUser = async (req, res) => {
 
 const getPedidoById = async (req, res) => {
     const { id } = req.params;
-
+    console.log("pedido1")
     if (!id) return res.status(400).json({ message: "Se necesita un ID" });
+    console.log("pedido2")
 
     try {
+        console.log("pedido3")
+
         const pedido = await PedidosService.getPedidoById(id);
+        console.log("pedido4")
+
         if (!pedido)
             return res.status(404).json({ message: "Pedido no encontrado" });
         res.json(pedido);
