@@ -29,6 +29,9 @@ PlatosxPedidos.init(
     }
 );
 
+Pedidos.hasMany(PlatosxPedidos, { foreignKey: "PedidoId", as: "platosxpedidos" });
+PlatosxPedidos.belongsTo(Pedidos, { foreignKey: "PedidoId", as: "pedido" });
+
 
 /*.hasMany(PlatosxPedidos, {
     foreignKey: 'PedidoId'

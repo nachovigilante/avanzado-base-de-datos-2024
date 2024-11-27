@@ -17,7 +17,22 @@ const getPlatosByPedido = async (idPedido) => {
 };
 
 const getPedidos = async () => {
-    const pedidos = await Pedidos.findAll({ include: [Usuarios] });
+    const pedidos = await Pedidos.findAll({
+        include: [
+            {
+                model: Plato,
+                as: "platos",
+                attributes: ["id", "tipo", "nombre", "precio", "descripcion"],
+            },
+            {
+                model: PlatosXPedidos,
+                as: "platosxpedidos", 
+                attributes: ["cantidad"], 
+            }, 
+        ],
+        attributes: ["id", "fecha", "estado", "UsuarioId"],  
+    });
+
     return pedidos;
 };
 
