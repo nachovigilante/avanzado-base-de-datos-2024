@@ -1,0 +1,79 @@
+//Usuarios
+POST http://localhost:9000/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "nombre":"benjamin",
+    "apellido":"piccagli",
+    "email":"benjapiccagli@gmail.com",
+    "password":"123",
+    "admin": false
+}
+
+###
+
+POST http://localhost:9000/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"benjapiccagli@gmail.com",
+    "password":"123"
+}
+
+###
+
+//Pedidos
+
+GET http://localhost:9000/pedidos HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTczMTg4MjE5MCwiZXhwIjoxNzMxODgzOTkwfQ.G2lfk84EkDBLFA0n2Ejj0rdheP8gkLuBW0Ycqhdhoto
+
+###
+
+GET http://localhost:9000/pedidos/usuario HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTczMTg4MjE5MCwiZXhwIjoxNzMxODgzOTkwfQ.G2lfk84EkDBLFA0n2Ejj0rdheP8gkLuBW0Ycqhdhoto
+
+###
+
+GET http://localhost:9000/pedidos/26 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzMxODgxNDMwLCJleHAiOjE3MzE4ODMyMzB9.wp94Wy1PsHcjQQ0hmlLF8TOe4Ib_EH7xsoT-3Vr4dgk
+###
+
+POST http://localhost:9000/pedidos HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTczMTg4MjE5MCwiZXhwIjoxNzMxODgzOTkwfQ.G2lfk84EkDBLFA0n2Ejj0rdheP8gkLuBW0Ycqhdhoto
+Content-Type: application/json
+
+{
+    "idUsuario": 9,
+    "platos": [
+        {
+            "nombre":"Combo Ivo",
+            "id": 1,
+            "cantidad": 2
+        },
+        {
+            "nombre":"Combo Chona",
+            "id": 2,
+            "cantidad": 1
+        }
+    ]
+}
+
+###
+
+PUT http://localhost:9000/pedidos/27/aceptar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzMxODc5NTg3LCJleHAiOjE3MzE4ODEzODd9.mI_95kih4dnpDijTVMQ86RtP8pea7TjDCYlwk5SVYec
+
+###
+
+PUT http://localhost:9000/pedidos/26/comenzar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzMxODc5NTg3LCJleHAiOjE3MzE4ODEzODd9.mI_95kih4dnpDijTVMQ86RtP8pea7TjDCYlwk5SVYec
+
+###
+
+PUT http://localhost:9000/pedidos/26/entregar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzMxODc5NTg3LCJleHAiOjE3MzE4ODEzODd9.mI_95kih4dnpDijTVMQ86RtP8pea7TjDCYlwk5SVYec
+
+###
+
+DELETE http://localhost:9000/pedidos/18
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzMxODc5NTg3LCJleHAiOjE3MzE4ODEzODd9.mI_95kih4dnpDijTVMQ86RtP8pea7TjDCYlwk5SVYec
